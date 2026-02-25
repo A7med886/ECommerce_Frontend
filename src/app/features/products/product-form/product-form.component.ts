@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from '../../../core/services/product.service';
+import { Category, ProductService } from '../../../core/services/product.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { Observable } from 'rxjs';
 import { LoadingService } from '../../../core/services/loading.service';
@@ -19,13 +19,13 @@ export class ProductForm implements OnInit {
   isEditMode = false;
   productId?: string;
   private currentIdempotencyKey: string = '';
-
-  categories = [
-    { id: "AB187206-4337-4739-BECF-925FFD2F35DB", name: 'Electronics' },
-    { id: "7B40D22F-538C-4FEB-99FE-D41B6ECE99CB", name: 'Clothing' },
-    { id: "C6595E30-8926-4B8A-CA8C-08DE6E5B770C", name: 'Books' },
-    { id: "B730D5AB-D9C9-4BBE-CA8D-08DE6E5B770C", name: 'Home & Garden' }
-  ];
+  categories:Category[] = [];
+  // categories = [
+  //   { id: "AB187206-4337-4739-BECF-925FFD2F35DB", name: 'Electronics' },
+  //   { id: "7B40D22F-538C-4FEB-99FE-D41B6ECE99CB", name: 'Clothing' },
+  //   { id: "C6595E30-8926-4B8A-CA8C-08DE6E5B770C", name: 'Books' },
+  //   { id: "B730D5AB-D9C9-4BBE-CA8D-08DE6E5B770C", name: 'Home & Garden' }
+  // ];
 
   constructor(
     private fb: FormBuilder,
@@ -36,6 +36,7 @@ export class ProductForm implements OnInit {
     private loadingService: LoadingService,
     private idempotencyService: IdempotencyService
   ) {
+    this.categories = this.productService.categories;
     this.loading$ = this.loadingService.loading$;
     this.productForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(200)]],

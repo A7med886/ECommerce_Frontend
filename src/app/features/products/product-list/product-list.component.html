@@ -24,10 +24,22 @@
         </mat-select>
       </mat-form-field>
 
+      <mat-form-field appearance="outline" class="sort-field">
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="queryParams.categoryId" (selectionChange)="onCategoryChange()">
+          <mat-option value="">All Categories</mat-option>
+          <mat-option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <button mat-icon-button (click)="toggleSortDirection()" 
               [matTooltip]="queryParams.isDescending ? 'Sort Ascending' : 'Sort Descending'">
         <mat-icon>{{ queryParams.isDescending ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
       </button>
+
+      <button mat-button (click)="clearCategory()">Clear</button>
     </div>
   </mat-card>
 

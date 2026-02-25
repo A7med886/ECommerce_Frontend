@@ -8,6 +8,7 @@ import {
   Product,
   PagedResult,
   ProductQueryParams,
+  Category,
 } from '../../../core/services/product.service';
 import { CartService } from '../../../core/services/cart.service';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -24,6 +25,7 @@ import { ConfirmService } from '../../../core/services/confirm.service';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
+   categories:Category[] = [];
   loading$: Observable<boolean>;
   searchControl = new FormControl('');
   private destroy$ = new Subject<void>();
@@ -33,6 +35,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     pageSize: 12,
     sortBy: 'name',
     isDescending: false,
+    categoryId: undefined,
   };
 
   pagedResult?: PagedResult<Product>;
@@ -53,6 +56,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService,
     private confirmService: ConfirmService
   ) {
+    this.categories = this.productService.categories;
     this.loading$ = this.loadingService.loading$;
   }
   ngOnInit(): void {
@@ -97,6 +101,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   onSortChange(): void {
+    this.queryParams.pageNumber = 1;
+    this.loadProducts();
+  }
+
+  onCategoryChange(): void {
     this.queryParams.pageNumber = 1;
     this.loadProducts();
   }
@@ -169,4 +178,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
     return pages;
   }
+
+  clearCategory(): void {
+  this.queryParams.categoryId = undefined;
+  this.queryParams.pageNumber = 1;
+  this.queryParams.searchTerm = undefined;
+  this.searchControl.setValue('');
+  this.queryParams.sortBy = 'name';
+  this.queryParams.isDescending = false;
+  this.loadProducts();
+}
 }

@@ -15,6 +15,10 @@ export interface Product {
   imageUrl?: string;
   isActive: boolean;
 }
+export interface Category {
+  id: string;
+  name: string;
+}
 
 export interface PagedResult<T> {
   items: T[];
@@ -40,7 +44,12 @@ export interface ProductQueryParams {
 })
 export class ProductService {
   private apiUrl = `${environment.apiUrl}/api/products`;
-
+  public categories: Category[] = [
+    { id: "AB187206-4337-4739-BECF-925FFD2F35DB", name: 'Electronics' },
+    { id: "7B40D22F-538C-4FEB-99FE-D41B6ECE99CB", name: 'Clothing' },
+    { id: "C6595E30-8926-4B8A-CA8C-08DE6E5B770C", name: 'Books' },
+    { id: "B730D5AB-D9C9-4BBE-CA8D-08DE6E5B770C", name: 'Home & Garden' }
+  ];
   constructor(private http: HttpClient) {}
 
   getProducts(params: ProductQueryParams): Observable<PagedResult<Product>> {

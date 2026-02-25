@@ -27,8 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           // Server-side error
           switch (error.status) {
             case 400:
-              // errorMessage = error.error?.error || 'Bad request';
-              errorMessage = 'An error occurred';
+              errorMessage = error.error?.error || 'Bad request';
               break;
             case 401:
               // Don't handle 401 here - let TokenRefreshInterceptor handle it
