@@ -1,0 +1,129 @@
+.checkout-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+
+  h1 {
+    margin-bottom: 24px;
+  }
+}
+
+.checkout-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+
+  @media (max-width: 968px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.order-items-card {
+  padding: 24px;
+
+  h2 {
+    margin: 0 0 24px 0;
+  }
+
+  .order-item {
+    display: grid;
+    grid-template-columns: 80px 1fr auto auto;
+    gap: 16px;
+    padding: 16px;
+    border-bottom: 1px solid #e0e0e0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .item-image {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .item-details {
+      h3 {
+        margin: 0 0 4px 0;
+        font-size: 16px;
+      }
+
+      p {
+        margin: 0;
+        color: #666;
+        font-size: 14px;
+      }
+    }
+
+    .item-quantity {
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    .item-price {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 18px;
+    }
+  }
+}
+
+.checkout-form-card {
+  padding: 24px;
+  height: fit-content;
+
+  h2 {
+    margin: 0 0 16px 0;
+  }
+
+  .full-width {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .order-summary {
+    margin: 24px 0;
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding: 8px 0;
+
+      &.total {
+        border-top: 2px solid #e0e0e0;
+        margin-top: 16px;
+        padding-top: 16px;
+        font-size: 20px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .place-order-btn {
+    width: 100%;
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .checkout-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 12px;
+    background: #e3f2fd;
+    border-radius: 4px;
+    font-size: 14px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: #1976d2;
+    }
+  }
+}

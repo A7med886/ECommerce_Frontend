@@ -1,0 +1,60 @@
+<div class="notification-center">
+  <!-- ✅ FIX: Always show badge value, even if 0 -->
+  <button mat-icon-button 
+          [matBadge]="unreadCount > 0 ? unreadCount : ''" 
+          matBadgeColor="warn"
+          (click)="toggleDropdown()"
+          class="notification-button">
+    <mat-icon>notifications</mat-icon>
+  </button>
+
+  <!-- Backdrop -->
+  <div class="dropdown-backdrop" 
+       *ngIf="showDropdown" 
+       (click)="showDropdown = false"></div>
+
+  <!-- Dropdown -->
+  <div class="notification-dropdown" 
+       *ngIf="showDropdown"
+       (click)="$event.stopPropagation()">
+    <div class="dropdown-header">
+      <h3>Notifications</h3>
+      <div class="header-actions">
+        <button mat-button (click)="markAllAsRead()" *ngIf="unreadCount > 0" class="small-btn">
+          Mark all read
+        </button>
+        <button mat-button (click)="clearAll()" *ngIf="notifications.length > 0" class="small-btn">
+          Clear all
+        </button>
+      </div>
+    </div>
+
+    <div class="notifications-list" *ngIf="notifications.length > 0">
+      <div class="notification-item" 
+           *ngFor="let notification of notifications"
+           [class.unread]="!notification.read"
+           (click)="handleNotificationClick(notification)">
+        <div class="notification-icon" [ngClass]="getNotificationColor(notification)">
+          <mat-icon>{{ getNotificationIcon(notification) }}</mat-icon>
+        </div>
+        <div class="notification-content">
+          <p class="notification-title" *ngIf="notification.title">
+            {{ notification.title }}
+          </p>
+          <p class="notification-message">
+            {{ notification.message }}
+          </p>
+          <p class="notification-time">
+            {{ notification.timestamp | date:'MMM d, h:mm a' }}
+          </p>
+        </div>
+        <div class="unread-indicator" *ngIf="!notification.read"></div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="notifications.length === 0">
+      <mat-icon>notifications_none</mat-icon>
+      <p>No notifications</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 64px;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 600;
+
+  mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.custom-cart-badge ::ng-deep .mat-badge-content 
+{
+  left: 95% !important;
+  bottom: 85% !important;
+  top: auto !important;
+  right: auto !important;
+  transform: none !important;
+}
+
+@media (max-width: 600px) {
+  .logo span {
+    display: none;
+  }
+
+  .nav-right button span {
+    display: none;
+  }
+}

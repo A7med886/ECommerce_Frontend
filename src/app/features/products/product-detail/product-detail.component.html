@@ -1,0 +1,89 @@
+<div class="product-detail-container" *ngIf="!(loading$ | async) && product">
+  <button mat-icon-button (click)="goBack()" class="back-button">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <mat-card class="product-card">
+    <div class="product-content">
+      <div class="product-image">
+        <img
+          [src]="product.imageUrl || 'assets/product/product-placeholder.png'"
+          [alt]="product.name"
+        />
+      </div>
+
+      <div class="product-info">
+        <h1>{{ product.name }}</h1>
+        <p class="category">{{ product.categoryName }}</p>
+        <h2 class="price">{{ product.price | currency }}</h2>
+
+        <p class="description">{{ product.description }}</p>
+
+        <div class="stock-info" [class.low-stock]="product.stock < 10">
+          <mat-icon>inventory_2</mat-icon>
+          <span *ngIf="product.stock > 0">{{ product.stock }} in stock</span>
+          <span *ngIf="product.stock === 0" class="out-of-stock">Out of stock</span>
+        </div>
+
+        <!-- ACTIVE/INACTIVE STATUS BADGE (Top Left) -->
+        <div *ngIf="isAdmin && product.isActive === true" class="status-badge active-badge">
+          <mat-icon>check_circle</mat-icon>
+          Active
+        </div>
+        <div *ngIf="isAdmin && product.isActive === false" class="status-badge inactive-badge">
+          <mat-icon>cancel</mat-icon>
+          Inactive
+        </div>
+
+        <div class="quantity-selector" *ngIf="product.stock > 0">
+          <button mat-icon-button (click)="decrementQuantity()" [disabled]="quantity <= 1">
+            <mat-icon>remove</mat-icon>
+          </button>
+          <span class="quantity-display">{{ quantity }}</span>
+          <button
+            mat-icon-button
+            (click)="incrementQuantity()"
+            [disabled]="quantity >= product.stock"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+
+        <mat-card-actions class="product-actions">
+          <button
+            mat-raised-button
+            color="primary"
+            class="add-to-cart-btn"
+            (click)="addToCart()"
+            [disabled]="product.stock === 0"
+          >
+            <mat-icon>shopping_cart</mat-icon>
+            Add to Cart
+          </button>
+
+          <button
+            *ngIf="isAdmin"
+            mat-icon-button
+            (click)="editProduct(product.id, $event)"
+            class="edit-btn"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button
+            *ngIf="isAdmin"
+            mat-icon-button
+            (click)="deleteProduct(product.id, $event)"
+            class="delete-btn"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<div class="loading-container" *ngIf="loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>

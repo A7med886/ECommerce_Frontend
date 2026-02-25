@@ -1,0 +1,167 @@
+.product-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.back-button {
+  margin-bottom: 16px;
+}
+
+.product-card {
+  padding: 24px;
+
+    &.inactive-product {
+    opacity: 0.6;
+    
+    .product-image {
+      filter: grayscale(60%);
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .status-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      z-index: 2;
+
+      mat-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .active-badge {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .inactive-badge {
+      background-color: #f44336;
+      color: white;
+    }
+
+    // STOCK BADGES (Orange/Red - Top Right)
+    .stock-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 2;
+    }
+}
+
+.product-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.product-image {
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+}
+
+.product-info {
+  h1 {
+    margin: 0 0 8px 0;
+    font-size: 32px;
+  }
+
+  .category {
+    color: #666;
+    margin: 0 0 16px 0;
+  }
+
+  .price {
+    color: #3f51b5;
+    font-size: 28px;
+    margin: 16px 0;
+  }
+
+  .description {
+    line-height: 1.6;
+    margin: 24px 0;
+  }
+
+  .stock-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 16px 0;
+
+    &.low-stock {
+      color: #ff9800;
+    }
+
+    .out-of-stock {
+      color: #f44336;
+      font-weight: 500;
+    }
+  }
+
+  .quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 24px 0;
+
+    .quantity-display {
+      font-size: 20px;
+      font-weight: 500;
+      min-width: 30px;
+      text-align: center;
+    }
+  }
+
+  .add-to-cart-btn {
+    width: 100%;
+    height: 48px;
+    font-size: 16px;
+  }
+}
+
+  .product-actions {
+    display: flex;
+    gap: 8px;
+    padding: 0 16px 16px;
+
+    .add-to-cart-btn {
+      flex: 1;
+    }
+
+    .edit-btn {
+      color: #666;
+    }
+  }
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}

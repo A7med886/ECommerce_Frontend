@@ -1,0 +1,92 @@
+.order-management-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+
+  h1 {
+    margin-bottom: 24px;
+  }
+}
+
+.filters-card {
+  margin-bottom: 24px;
+  padding: 16px;
+
+  .filters {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+
+  .search-field {
+    flex: 1;
+    margin-bottom: 0 !important;
+  }
+
+  .status-field {
+    min-width: 200px;
+    margin-bottom: 0 !important;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+
+  .stats {
+    padding: 8px 0;
+    color: #666;
+    font-weight: 500;
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.orders-table-card {
+  padding: 0;
+  overflow-x: auto;
+}
+
+.orders-table {
+  width: 100%;
+
+  .customer-info {
+    display: flex;
+    flex-direction: column;
+
+    .customer-name {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .customer-email {
+      font-size: 12px;
+      color: #666;
+    }
+  }
+
+  mat-chip {
+    font-size: 12px;
+    min-height: 24px;
+  }
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  gap: 16px;
+
+  .page-info {
+    font-size: 14px;
+    color: #666;
+  }
+}

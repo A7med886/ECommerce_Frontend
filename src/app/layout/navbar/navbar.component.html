@@ -1,0 +1,67 @@
+<mat-toolbar color="primary" class="navbar">
+  <div class="navbar-content">
+    <div class="nav-left">
+      <button mat-button routerLink="/products" class="logo">
+        <mat-icon>shopping_bag</mat-icon>
+        <span>E-Commerce</span>
+      </button>
+
+      <button mat-button routerLink="/products">
+        Products
+      </button>
+
+      <button mat-button routerLink="/orders/manage" *ngIf="isAdmin$ | async">
+        Order Management
+      </button>
+    </div>
+
+    <div class="nav-right">
+      <ng-container *ngIf="isAuthenticated$ | async; else notLoggedIn">
+        <!-- Notification Center for ALL users -->
+        <app-notification-center class="custom-cart-badge"></app-notification-center>
+        
+        <button mat-icon-button [matBadge]="cartCount$ | async" 
+                class="custom-cart-badge"
+                matBadgeColor="warn"
+                [matBadgeHidden]="(cartCount$ | async) === 0"
+                (click)="goToCart()">
+          <mat-icon>shopping_cart</mat-icon>
+        </button>
+
+        <button mat-button [matMenuTriggerFor]="userMenu">
+          <mat-icon>account_circle</mat-icon>
+          <span>{{ userName$ | async }}</span>
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item (click)="goToOrders()">
+            <mat-icon>receipt_long</mat-icon>
+            <span>My Orders</span>
+          </button>
+
+          <!-- <ng-container *ngIf="isAdmin$ | async">
+            <mat-divider></mat-divider>
+            <button mat-menu-item routerLink="/products/new">
+              <mat-icon>add</mat-icon>
+              <span>Create Product</span>
+            </button>
+          </ng-container> -->
+
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </ng-container>
+
+      <ng-template #notLoggedIn>
+        <button mat-button (click)="goToLogin()">
+          <mat-icon>login</mat-icon>
+          Login
+        </button>
+      </ng-template>
+    </div>
+  </div>
+</mat-toolbar>

@@ -1,0 +1,100 @@
+<div class="cart-container">
+  <h1>Shopping Cart</h1>
+
+  <div *ngIf="cartItems.length === 0" class="empty-cart">
+    <mat-icon>shopping_cart</mat-icon>
+    <h2>Your cart is empty</h2>
+    <p>Add some products to get started!</p>
+    <button mat-raised-button color="primary" (click)="continueShopping()">
+      Continue Shopping
+    </button>
+  </div>
+
+  <div *ngIf="cartItems.length > 0" class="cart-content">
+    <mat-card class="cart-items-card">
+      <table mat-table [dataSource]="cartItems" class="cart-table">
+        <ng-container matColumnDef="image">
+          <th mat-header-cell *matHeaderCellDef>Product</th>
+          <td mat-cell *matCellDef="let item">
+            <img [src]="item.product.imageUrl || 'assets/product/product-placeholder.png'" 
+                 [alt]="item.product.name"
+                 class="product-image">
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let item">
+            <div class="product-info">
+              <span class="product-name">{{ item.product.name }}</span>
+              <span class="product-category">{{ item.product.categoryName }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let item">
+            {{ item.product.price | currency }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+          <td mat-cell *matCellDef="let item">
+            <div class="quantity-controls">
+              <button mat-icon-button (click)="updateQuantity(item.product.id, item.quantity - 1)">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <span class="quantity">{{ item.quantity }}</span>
+              <button mat-icon-button (click)="updateQuantity(item.product.id, item.quantity + 1)"
+                      [disabled]="item.quantity >= item.product.stock">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="subtotal">
+          <th mat-header-cell *matHeaderCellDef>Subtotal</th>
+          <td mat-cell *matCellDef="let item">
+            {{ item.product.price * item.quantity | currency }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let item">
+            <button mat-icon-button color="warn" 
+                    (click)="removeItem(item.product.id, item.product.name)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card>
+
+    <mat-card class="cart-summary">
+      <h2>Order Summary</h2>
+      <div class="summary-row">
+        <span>Items:</span>
+        <span>{{ cartItems.length }}</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total:</span>
+        <span>{{ getTotal() | currency }}</span>
+      </div>
+      <button mat-raised-button color="primary" class="checkout-btn"
+              (click)="proceedToCheckout()">
+        Proceed to Checkout
+      </button>
+      <button mat-stroked-button class="continue-btn"
+              (click)="continueShopping()">
+        Continue Shopping
+      </button>
+    </mat-card>
+  </div>
+</div>

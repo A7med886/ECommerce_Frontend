@@ -1,0 +1,119 @@
+<div class="product-list-container">
+  <div class="header">
+    <h1>Products</h1>
+    <button *ngIf="isAdmin" mat-raised-button color="primary" (click)="createProduct()">
+      <mat-icon>add</mat-icon>
+      New Product
+    </button>
+  </div>
+
+  <mat-card class="filters-card">
+    <div class="filters">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search products</mat-label>
+        <input matInput [formControl]="searchControl" placeholder="Search by name or description">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="sort-field">
+        <mat-label>Sort by</mat-label>
+        <mat-select [(ngModel)]="queryParams.sortBy" (selectionChange)="onSortChange()">
+          <mat-option *ngFor="let option of sortOptions" [value]="option.value">
+            {{ option.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-icon-button (click)="toggleSortDirection()" 
+              [matTooltip]="queryParams.isDescending ? 'Sort Ascending' : 'Sort Descending'">
+        <mat-icon>{{ queryParams.isDescending ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
+      </button>
+    </div>
+  </mat-card>
+
+  <div *ngIf="loading$ | async" class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div *ngIf="!(loading$ | async) && products.length === 0" class="empty-state">
+    <mat-icon>inventory_2</mat-icon>
+    <h2>No products found</h2>
+    <p>Try adjusting your search or filters</p>
+  </div>
+
+  <div *ngIf="!(loading$ | async) && products.length > 0" class="products-grid">
+    <mat-card *ngFor="let product of products; trackBy: trackByProductId" 
+              class="product-card"
+              [class.inactive-product]="product.isActive === false"
+              (click)="viewProduct(product.id)">
+      <div class="product-image-container">
+        <img [src]="product.imageUrl || 'assets/product/product-placeholder.png'" 
+             [alt]="product.name"
+             class="product-image">
+
+        <!-- ACTIVE/INACTIVE STATUS BADGE (Top Left) -->
+        <div *ngIf="isAdmin && product.isActive === true" class="status-badge active-badge">
+          <mat-icon>check_circle</mat-icon>
+          Active
+        </div>
+        <div *ngIf="isAdmin && product.isActive === false" class="status-badge inactive-badge">
+          <mat-icon>cancel</mat-icon>
+          Inactive
+        </div>
+
+        <div *ngIf="product.stock === 0" class="out-of-stock-badge">
+          Out of Stock
+        </div>
+        <div *ngIf="product.stock > 0 && product.stock < 10" class="low-stock-badge">
+          Only {{ product.stock }} left
+        </div>
+      </div>
+
+      <mat-card-content class="product-info">
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="product-category">{{ product.categoryName }}</p>
+        <p class="product-price">{{ product.price | currency }}</p>
+      </mat-card-content>
+
+      <mat-card-actions class="product-actions">
+        <button mat-raised-button color="primary" 
+                (click)="addToCart(product, $event)"
+                [disabled]="product.stock === 0"
+                class="add-to-cart-btn">
+          <mat-icon>shopping_cart</mat-icon>
+          {{ product.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
+        </button>
+        <button *ngIf="isAdmin" mat-icon-button (click)="editProduct(product.id, $event)"
+                class="edit-btn">
+          <mat-icon>edit</mat-icon>
+        </button>
+        
+        <button *ngIf="isAdmin" mat-icon-button (click)="deleteProduct(product.id, $event)"
+                class="delete-btn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div *ngIf="pagedResult && pagedResult.totalPages > 1" class="pagination">
+    <button mat-icon-button 
+            [disabled]="!pagedResult.hasPreviousPage"
+            (click)="onPageChange(queryParams.pageNumber - 1)">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    <button *ngFor="let page of getPageNumbers()" 
+            mat-button
+            [class.active]="page === queryParams.pageNumber"
+            (click)="onPageChange(page)">
+      {{ page }}
+    </button>
+
+    <button mat-icon-button 
+            [disabled]="!pagedResult.hasNextPage"
+            (click)="onPageChange(queryParams.pageNumber + 1)">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+</div>

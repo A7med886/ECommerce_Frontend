@@ -1,0 +1,254 @@
+.notification-center {
+  position: relative;
+}
+
+.notification-button {
+  margin: 0 8px;
+  transition: transform 0.2s ease;
+
+  // &:hover {
+  //   transform: scale(1.05);
+  // }
+}
+
+/* Dropdown container */
+.notification-dropdown {
+  position: absolute;
+  top: 56px;
+  right: 0;
+  width: 420px;
+  max-height: 620px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeIn 0.18s ease-out;
+
+  @media (max-width: 480px) {
+    width: 95vw;
+    right: -10px;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.dropdown-header {
+  padding: 16px 18px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 6px;
+
+    button {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 0 6px;
+      min-width: auto;
+      color: #1976d2;
+    }
+  }
+}
+
+/* List */
+.notifications-list {
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+/* Scrollbar styling */
+.notifications-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.notifications-list::-webkit-scrollbar-thumb {
+  background: #d0d0d0;
+  border-radius: 10px;
+}
+
+.notifications-list::-webkit-scrollbar-thumb:hover {
+  background: #b0b0b0;
+}
+
+/* Notification item */
+.notification-item {
+  display: flex;
+  gap: 14px;
+  padding: 14px 18px;
+  border-bottom: 1px solid #f4f4f4;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+
+  &:hover {
+    background: #f7f9fc;
+  }
+
+  /* Better unread style */
+  &.unread {
+    border-left: 4px solid #1976d2;
+    background: #f3f8ff;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .notification-icon {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.success {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    &.error {
+      background: #ffebee;
+      color: #c62828;
+    }
+
+    &.warning {
+      background: #fff8e1;
+      color: #f9a825;
+    }
+
+    &.info {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+
+    mat-icon {
+      font-size: 18px;
+    }
+  }
+
+  .notification-content {
+    flex: 1;
+    min-width: 0;
+
+    .notification-title {
+      margin: 0 0 4px;
+      font-weight: 600;
+      font-size: 13px;
+      color: #222;
+    }
+
+    .notification-message {
+      margin: 0 0 6px;
+      font-size: 13px;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .notification-time {
+      margin: 0;
+      font-size: 11px;
+      color: #999;
+    }
+  }
+}
+
+/* Empty state */
+.empty-state {
+  padding: 60px 20px;
+  text-align: center;
+  color: #888;
+
+  mat-icon {
+    font-size: 56px;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 12px;
+    opacity: 0.6;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+// ... existing styles ...
+
+.dropdown-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999; // Below dropdown but above everything else
+  background: transparent;
+}
+
+.notification-dropdown {
+  z-index: 1000; // Above backdrop
+}
+
+.small-btn {
+  font-size: 11px !important;
+  line-height: 20px !important;
+  min-width: auto !important;
+  padding: 0 8px !important;
+}
+
+.dropdown-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background: transparent;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  z-index: 1000;
+}
+
+.new-badge {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: #1976d2;
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 12px;
+}
